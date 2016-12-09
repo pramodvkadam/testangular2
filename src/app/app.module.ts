@@ -2,7 +2,7 @@ import "./rxjs-extensions";
 import {BrowserModule} from "@angular/platform-browser";
 import {NgModule} from "@angular/core";
 import {FormsModule} from "@angular/forms";
-import {HttpModule} from "@angular/http";
+import {HttpModule, XHRBackend, RequestOptions} from "@angular/http";
 import {Ng2BootstrapModule} from "ng2-bootstrap";
 import {AppComponent} from "./app.component";
 import {routing} from "./app.routing";
@@ -11,22 +11,39 @@ import {HeaderComponent} from "./shared/header.component";
 import {FooterComponent} from "./shared/footer.component";
 import {AuthGuard} from "./shared/auth.guard";
 import {HomeComponent} from "./home/home.component";
+import {ToastModule} from "ng2-toastr/ng2-toastr";
+import {HttpService} from "./shared/http.service";
+import {AccountComponent} from "./home/favorite-recent-list/account.component";
+import {ContactComponent} from "./home/favorite-recent-list/contact.component";
+import {DocumentComponent} from "./home/favorite-recent-list/document.component";
+import {EmailComponent} from "./home/favorite-recent-list/email.component";
+import {InfiniteScrollModule} from "angular2-infinite-scroll";
+
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     FooterComponent,
-    HomeComponent
+      HomeComponent,
+      AccountComponent, ContactComponent, DocumentComponent, EmailComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
     routing,
-    Ng2BootstrapModule
+      Ng2BootstrapModule,
+      ToastModule,
+      InfiniteScrollModule
   ],
-  providers: [AuthService, AuthGuard],
+    providers: [AuthService, AuthGuard, {
+        provide: HttpService,
+        useFactory: (backend: XHRBackend, options: RequestOptions) => {
+            return new HttpService(backend, options);
+        },
+        deps: [XHRBackend, RequestOptions]
+    }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -309,10 +309,6 @@ table > thead > tr > th a {
 .navbar .container-fluid .logo {
     display: inline-block;
     vertical-align: middle;
-    *vertical-align: auto;
-    *zoom: 1;
-    *display: inline;
-    vertical-align: middle;
     background: url('assets/images/sprite-scbcbe29606.png') no-repeat;
     background-position: 0 0;
     height: 56px;
