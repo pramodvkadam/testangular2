@@ -18,6 +18,9 @@ import {ContactComponent} from "./home/favorite-recent-list/contact.component";
 import {DocumentComponent} from "./home/favorite-recent-list/document.component";
 import {EmailComponent} from "./home/favorite-recent-list/email.component";
 import {InfiniteScrollModule} from "angular2-infinite-scroll";
+import {CampsiteService} from "./shared/campsite.service";
+import {EmitterService} from "./shared/emitter.service";
+import {AcsiService} from "./shared/acsi.service";
 
 
 @NgModule({
@@ -37,13 +40,13 @@ import {InfiniteScrollModule} from "angular2-infinite-scroll";
       ToastModule,
       InfiniteScrollModule
   ],
-    providers: [AuthService, AuthGuard, {
+    providers: [AuthService, AuthGuard, EmitterService, {
         provide: HttpService,
         useFactory: (backend: XHRBackend, options: RequestOptions) => {
             return new HttpService(backend, options);
         },
         deps: [XHRBackend, RequestOptions]
-    }],
+    }, CampsiteService, AcsiService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

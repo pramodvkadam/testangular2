@@ -7,13 +7,19 @@ import {MemosComponent} from "./memos/memos.component";
 import {AttributesComponent} from "./attributes/attributes.component";
 import {ResponsesComponent} from "./responses/responses.component";
 import {TasksComponent} from "./tasks/tasks.component";
+import {EditAddressComponent} from "./addresses/edit-address.component";
 
 const MODULE_ROUTES: Routes = [
     {
         path: '', redirectTo: 'emails', pathMatch: 'full'
     },
     {path: 'emails', component: EmailsComponent},
-    {path: 'addresses', component: AddressesComponent},
+    {
+        path: 'addresses', component: AddressesComponent, children: [
+        {path: 'add', component: EditAddressComponent},
+        {path: ':addressId', component: EditAddressComponent},
+    ]
+    },
     {path: 'contact-persons', component: ContactPersonsComponent},
     {path: 'documents', component: DocumentsComponent},
     {path: 'memos', component: MemosComponent},
