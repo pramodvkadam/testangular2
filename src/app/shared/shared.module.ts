@@ -7,6 +7,7 @@ import {Ng2BootstrapModule} from "ng2-bootstrap";
 import {DataTableModule} from "angular2-datatable";
 import {SafeHtmlPipe} from "./safe-html.pipe";
 import {Nl2brPipe} from "./nl2br.pipe";
+import {DocumentListComponent} from "./document-list/document-list.component";
 
 @NgModule({
     exports: [
@@ -19,7 +20,8 @@ import {Nl2brPipe} from "./nl2br.pipe";
         SafeHtmlPipe,
         Nl2brPipe
     ],
-    declarations: [SafeHtmlPipe, Nl2brPipe]
+    imports: [DataTableModule, CommonModule],
+    declarations: [SafeHtmlPipe, Nl2brPipe, DocumentListComponent]
 })
 export class SharedModule {
 }
