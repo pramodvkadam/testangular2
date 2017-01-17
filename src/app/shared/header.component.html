@@ -1,0 +1,76 @@
+<nav class="navbar navbar-default navbar-fixed-top" *ngIf="user">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar" (click)="toggleCollapsed()">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand logo"></a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse" [ngClass]="{'in':collapsed}">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown" dropdown (on-toggle)="toggled($event)">
+                    <a href id="simple-dropdown" dropdownToggle>
+                        <span class="fa fa-user" aria-hidden="true"></span> Hi {{user.toUpperCase()}} <span
+                            class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu" dropdownMenu aria-labelledby="simple-dropdown">
+                        <li><a href="" class="disabled"><span class="fa fa-star" aria-hidden="true"></span>
+                            Favourite</a></li>
+                        <li class="divider"></li>
+                        <li><a href=""><span class="fa fa-list-alt" aria-hidden="true"></span> Recent</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a (click)="logOut()"><span class="fa fa-sign-out"></span>Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown" dropdown (on-toggle)="toggled($event)">
+                    <a href id="simple-dropdown" dropdownToggle>
+                        Menu <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu" dropdownMenu aria-labelledby="simple-dropdown">
+                        <!--<li><a [routerLink]="['/search']"><i class="fa fa-search" aria-hidden="true"></i> Search <span class="badge badge&#45;&#45;small pull-right"></span></a></li>-->
+                        <!--<li class="divider"></li>-->
+                        <!--<li><a [routerLink]="['/statement']"><i class="fa fa-credit-card" aria-hidden="true"></i> Statement </a></li>-->
+                        <!--<li class="divider"></li>-->
+                        <!--<li><a [routerLink]="['/bookings']"><i class="fa fa-book" aria-hidden="true"></i> Bookings </a></li>-->
+                        <!--<li class="divider"></li>-->
+                        <!--<li><a [routerLink]="['/status-monitor']"><i class="fa fa-eye" aria-hidden="true"></i> Status Monitor </a></li>-->
+                        <!--<li class="divider"></li>-->
+                        <!--<li><a [routerLink]="['/areas']"><i class="fa fa-map" aria-hidden="true"></i> Area </a></li>-->
+                        <li class="divider"></li>
+                        <li><a href><i class="fa fa-download" aria-hidden="true"></i> Export </a></li>
+                        <li role="separator" class="divider"></li>
+                        <li>
+                            <a href="http://crm-dev/Campsites/main.aspx?etc=10010&extraqs=%3fpagemode%3diframe%26sitemappath%3dCS%257cExtensions%257cacsi_trainingday&pagetype=entitylist&viewid=%7b5AD6E177-5FB1-4D93-A3AE-D11532308578%7d&viewtype=1039"
+                               target="_blank">
+                                <i class="fa fa-graduation-cap" aria-hidden="true"></i> Training days <i
+                                    class="fa fa-external-link pull-right" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="http://crm-dev/Campsites/main.aspx?etc=10013&extraqs=%3fpagemode%3diframe%26sitemappath%3dCS%257cExtensions%257cacsi_inspectorweekend&pagetype=entitylist&viewid=%7b1B458124-C66E-4C13-BB12-61ECFB580EBF%7d&viewtype=1039"
+                               target="_blank">
+                                <i class="fa fa-tree" aria-hidden="true"></i> Inspector weekend <i
+                                    class="fa fa-external-link pull-right" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="http://crm-dev/Campsites/main.aspx?etc=10008&extraqs=%3fpagemode%3diframe%26sitemappath%3dCS%257cExtensions%257cacsi_inspection&pagetype=entitylist&viewid=%7b33045F64-A4BE-4CAA-9344-71C8499BCC38%7d&viewtype=1039"
+                               target="_blank">
+                                <i class="fa fa-clipboard" aria-hidden="true"></i> Inspections <i
+                                    class="fa fa-external-link pull-right" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div><!--/.container-fluid -->
+</nav>

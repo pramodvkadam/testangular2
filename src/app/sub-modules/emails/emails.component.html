@@ -1,0 +1,62 @@
+<a class="btn btn-primary pull-left" (click)="toogleCollapse()"> {{(collapsed)?"Collapse":"Expand"}} All</a>
+<br/>
+<br/>
+
+﻿
+<div class="table-responsive">
+    <table class="table table-striped table-bordered" [mfData]="filteredData" #mf="mfDataTable" [mfRowsOnPage]="10">
+
+        <thead>
+        <tr>
+            <td colspan="8">
+                <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+            </td>
+        </tr>
+        <tr>
+            <th *ngFor="let field of fields">
+                <mfDefaultSorter by="{{field.field}}">{{field.title}}</mfDefaultSorter>
+            </th>
+        </tr>
+        <tr>
+            <th *ngFor="let field of fields">
+                <input type="text" class="form-control" id="name"
+                       required
+                       (keyup)="filterData($event.target.value,field.field)" (blur)="$event.target.value = ''"
+                       [name]="field.field"
+                       *ngIf="field.filter">
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let email of mf.data">
+            <td *ngFor="let field of fields">
+                <div *ngIf="field.datatype !== 'command'">
+                    <div *ngIf="!field.collapsible"
+                         [innerHTML]="(field.valueFormatter === 'date')?(email[field.field] | date:'dd-MM-yyyy: HH.mm'):email[field.field] | safeHtml "></div>
+                    <div *ngIf="field.collapsible">
+                        <span *ngIf="collapsed || collapsedMail === email.Id"
+                              [innerHTML]="email[field.field] | safeHtml"></span>
+                        <div *ngIf="!collapsed && collapsedMail !== email.Id"><span
+                                [innerHTML]="email['Subject'] | safeHtml"></span><br/><a
+                                (click)="setCollapsedMail(email.Id)" class="pull-right">Read More</a></div>
+
+                    </div>
+
+                </div>
+                <!--<div *ngIf="field.datatype === 'command'">-->
+                <!--<span *ngIf="null !== email.Attachments && email.Attachments.length">-->
+                <!--<download-file *ngFor="let attachment of email.Attachments" title="{{attachment.Name}}" [isSourceCrm2011]="email.IsSourceCrm2011" [type]="'email'" [id]="attachment.Id"></download-file>-->
+                <!--</span>-->
+                <!--</div>-->
+            </td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="8">
+                <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+            </td>
+        </tr>
+        </tfoot>
+    </table>
+</div>
+

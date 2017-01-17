@@ -1,0 +1,46 @@
+<div class="container-fluid content">
+    <tabset>
+        <tab *ngFor="let tabz of tabs"
+             [active]="tabz === selectedTab"
+             (select)="getFavoriteAndRecent(tabz)">
+            <template tabHeading>
+                <div>
+                    <span>{{tabz}}</span>
+                </div>
+            </template>
+            <div class="tab-content">
+                <div class="tab-pane fade in active">
+                    <div class="row">
+                        <div class="col-md-6" *ngIf="selectedTab === 'Account' || selectedTab === 'Contact'">
+                            <h2><i class="fa fa-star" aria-hidden="true"></i> Favorite {{selectedTab}}</h2>
+                            <div *ngIf="selectedTab === 'Account'">
+                                <acsi-account [accounts]="favouriteList" *ngIf="favouriteList.length"></acsi-account>
+                            </div>
+                            <div *ngIf="selectedTab === 'Contact'">
+                                <acsi-contact [contacts]="favouriteList" *ngIf="favouriteList.length"></acsi-contact>
+                            </div>
+                            <p *ngIf="!favouriteList.length && favloading" class="loader">Loading..........</p>
+                        </div>
+                        <div [ngClass]="{'col-md-6':selectedTab === 'Account' || selectedTab === 'Contact','col-sm-12':selectedTab === 'Document' || selectedTab === 'Email'}">
+                            <h2><i class="fa fa-sort-amount-asc" aria-hidden="true"></i> Recent {{selectedTab}}</h2>
+                            <div *ngIf="selectedTab === 'Account'">
+                                <acsi-account [accounts]="recentList" *ngIf="recentList.length"></acsi-account>
+                            </div>
+                            <div *ngIf="selectedTab === 'Contact'">
+                                <acsi-contact [contacts]="recentList" *ngIf="recentList.length"></acsi-contact>
+                            </div>
+                            <div *ngIf="selectedTab === 'Document'">
+                                <acsi-document [data]="recentList" *ngIf="recentList.length"></acsi-document>
+                            </div>
+                            <div *ngIf="selectedTab === 'Email'">
+                                <acsi-email [data]="recentList" *ngIf="recentList.length"></acsi-email>
+                            </div>
+                            <p *ngIf="!recentList.length && recentloading" class="loader">Loading..........</p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </tab>
+    </tabset>
+</div>

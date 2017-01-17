@@ -1,0 +1,9 @@
+<a class="btn btn-primary pull-right" [routerLink]="['add']" [preserveQueryParams]="true"><i class="fa fa-upload"
+                                                                                             aria-hidden="true"></i>
+    Upload
+    Documents</a>
+<br/>
+<br/>
+<br/>
+<acsi-document-list [documents]="documents" [entityId]="entityNumber" [entityType]="entityType"
+                    *ngIf="documents"></acsi-document-list>

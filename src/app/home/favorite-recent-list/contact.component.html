@@ -1,0 +1,73 @@
+﻿<div class=" "
+     infinite-scroll
+     [infiniteScrollDistance]="2"
+     [infiniteScrollThrottle]="500"
+     (scrolled)="onScrollDown()" *ngIf="contacts.length">
+    <div *ngFor="let contact of contactList"
+         class="panel {{contact.Status === 'Active' ? 'panel-success': 'panel-danger'}}">
+        <div class="panel-heading">
+            <a href="" [routerLink]="['/contact',contact.SourceKey]"><h3 class="panel-title">{{contact.FullName}}</h3>
+            </a>
+        </div>
+        <div class="panel-body info-box">
+            <div class="col-md-6">
+                <table class="table table-condensed">
+                    <tbody>
+                    <tr>
+                        <td><i class="fa fa-envelope-o fa-fw" aria-hidden="true"></i> Email</td>
+                        <td><a href="mailto:{{contact.EmailAddress1}}">{{contact.EmailAddress1}}</a></td>
+                    </tr>
+                    <tr>
+                        <td><i class="fa fa-phone fa-fw" aria-hidden="true"></i> Telephone</td>
+                        <td><a href="tel:{{contact.Telephone1}}">{{contact.Telephone1}}</a></td>
+                    </tr>
+                    <tr>
+                        <td><i class="fa fa-mobile-phone fa-fw" aria-hidden="true"></i> Mobile</td>
+                        <td><a href="tel:{{contact.MobilePhone}}">{{contact.MobilePhone}}</a></td>
+                    </tr>
+                    <tr>
+                        <td><i class="fa fa-briefcase fa-fw" aria-hidden="true"></i> Function</td>
+                        <td>{{contact.Role}}</td>
+                    </tr>
+                    <tr>
+                        <td><i class="fa fa-building-o fa-fw" aria-hidden="true"></i> Company</td>
+                        <td><a *ngIf="contact.AccountSourceKey" [routerLink]="['/account', contact.AccountSourceKey]">{{contact.Company}}</a>
+                            <span *ngIf="!contact.AccountSourceKey">{{contact.Company}}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><i class="fa fa-square fa-fw" aria-hidden="true"></i> Status</td>
+                        <td>{{contact.Status}}</td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-6">
+
+                <table class="table table-condensed">
+                    <tbody>
+                    <tr>
+                        <td><i class="fa fa-home fa-fw" aria-hidden="true"></i> Address</td>
+                        <td>
+                            <span *ngIf="contact.AddressLine1">{{contact.AddressLine1}}</span><span
+                                *ngIf="contact.AddressLine1"><br/></span>
+                            <span *ngIf="contact.AddressLine2">{{contact.AddressLine2}}</span><span
+                                *ngIf="contact.AddressLine2"><br/></span>
+                            <span *ngIf="contact.AddressLine3">{{contact.AddressLine3}}</span><span
+                                *ngIf="contact.AddressLine3"><br/></span>
+                            <span *ngIf="contact.PostalCode">{{contact.PostalCode}}</span><span
+                                *ngIf="contact.PostalCode"></span>
+                            <span *ngIf="contact.City">{{contact.City}}</span><span *ngIf="contact.City"><br/></span>
+                            <span *ngIf="contact.Country">{{contact.Country}}</span>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

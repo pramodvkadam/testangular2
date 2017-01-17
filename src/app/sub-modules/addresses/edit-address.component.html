@@ -1,0 +1,94 @@
+<route-modal [hideCloseButton]="true">
+    <modal-header>
+        <h2>Add/Edit Address</h2>
+    </modal-header>
+    <modal-content>
+        <form *ngIf="active" (ngSubmit)="onSubmit()" [formGroup]="addressForm" class="form-horizontal">
+            <div class="form-group" [ngClass]="{'has-error':!addressForm.controls.AddressType.valid && submitted}">
+                <label class="col-md-4 control-label" for="AddressType">Address Type</label>
+                <div class="col-md-6">
+                    <select class="form-control"
+                            name="AddressType" formControlName="AddressType" id="AddressType">
+                        <option *ngFor="let address of addressTypes" [value]="address.Id">{{address.Name}}</option>
+                    </select>
+                </div>
+
+            </div>
+            <div class="form-group" [ngClass]="{'has-error':!addressForm.controls.Location.valid && submitted}">
+                <label class="col-md-4 control-label" for="Location">Location</label>
+                <div class="col-md-6">
+                    <input type="text" class="form-control"
+                           name="Location" formControlName="Location" id="Location">
+                </div>
+            </div>
+            <div class="form-group" [ngClass]="{'has-error':!addressForm.controls.Street.valid && submitted}">
+                <label class="col-md-4 control-label" for="Street">Street</label>
+                <div class="col-md-6">
+                    <input type="text" class="form-control" [(ngModel)]="address.Street"
+                           name="Street" formControlName="Street" id="Street" (change)="setPOBoxDisabled($event)"
+                           [readOnly]="addressForm.controls.PostBoxNumber.value">
+
+                </div>
+            </div>
+            <div class="form-group" [ngClass]="{'has-error':!addressForm.controls.PostBoxNumber.valid && submitted}">
+                <label class="col-md-4 control-label" for="PostBoxNumber">Post Box Number</label>
+                <div class="col-md-6">
+                    <input type="text" class="form-control"
+                           name="PostBoxNumber" formControlName="PostBoxNumber"
+                           [readOnly]="addressForm.controls.Street.value" (change)="setStreetDisabled($event)"
+                           id="PostBoxNumber">
+
+                </div>
+            </div>
+            <div class="form-group" [ngClass]="{'has-error':!addressForm.controls.HouseNumber.valid && submitted}">
+                <label class="col-md-4 control-label" for="HouseNumber">HouseNumber</label>
+                <div class="col-md-6">
+                    <input type="text" class="form-control"
+                           name="HouseNumber" formControlName="HouseNumber" id="HouseNumber">
+                </div>
+            </div>
+            <div class="form-group" [ngClass]="{'has-error':!addressForm.controls.ZipCode.valid && submitted}">
+                <label class="col-md-4 control-label" for="ZipCode">Zip/Postal Code</label>
+                <div class="col-md-6">
+                    <input type="text" class="form-control"
+                           name="ZipCode" formControlName="ZipCode" id="ZipCode">
+                </div>
+            </div>
+
+            <div class="form-group" [ngClass]="{'has-error':!addressForm.controls.City.valid && submitted}">
+                <label class="col-md-4 control-label" for="City">City</label>
+                <div class="col-md-6">
+                    <input type="text" [(ngModel)]="address.City" class="form-control"
+                           name="City" formControlName="City" id="City">
+                </div>
+            </div>
+
+            <div class="form-group" [ngClass]="{'has-error':!addressForm.controls.Country.valid && submitted}">
+                <label class="col-md-4 control-label" for="Country">Country</label>
+                <div class="col-md-6">
+                    <select class="form-control" id="Country"
+                            name="Country" formControlName="Country">
+                        <option *ngFor="let country of countries" [value]="(country.Id)?country.Name:''">
+                            {{country.Name}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-4 control-label"></label>
+                <div class="col-md-6">
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-send" aria-hidden="true"></i> Submit
+                    </button>
+                    <button type="button" class="btn btn-default"
+                            [disabled]="!addressForm.controls.ZipCode.value && !addressForm.controls.Country.value && !addressForm.controls.HouseNumber.value"
+                            (click)="validateAddress()">Validate Address
+                    </button>
+                </div>
+            </div>
+        </form>
+    </modal-content>
+    <modal-footer>
+
+    </modal-footer>
+</route-modal>

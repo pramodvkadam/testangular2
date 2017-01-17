@@ -1,0 +1,74 @@
+<div infinite-scroll
+     [infiniteScrollDistance]="2"
+     [infiniteScrollThrottle]="500"
+     (scrolled)="onScrollDown()" *ngIf="accounts.length">
+
+    <div *ngFor="let account of accountList"
+         class="panel {{account.Status === 'Active' ? 'panel-success': 'panel-danger'}}">
+        <div class="panel-heading">
+            <a [routerLink]="['/account', account.Number]"><h4>{{account.Name}}</h4></a>
+        </div>
+        <div class="panel-body info-box max-height">
+            <div class="col-md-2">
+                <a [routerLink]="['/account', account.Number]">
+                    <figure>
+                        <img src="data:image/png;base64,{{account.Image}}" *ngIf="account.Image" class="img-thumbnail"/>
+                        <img src="assets/images/no-photo.jpg" *ngIf="!account.Image" class="img-thumbnail"/>
+                    </figure>
+                </a>
+            </div>
+            <div class="col-md-5">
+                <table class="table table-condensed">
+                    <tbody>
+                    <tr>
+                        <td>
+                            <i class="fa fa-envelope-o fa-fw" aria-hidden="true"></i>
+                            <a href="mailto:{{account.EmailAddress}}">{{account.EmailAddress}}</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <i class="fa fa-phone fa-fw" aria-hidden="true"></i>
+                            <a href="tel:{{account.Telephone}}">{{account.Telephone}}</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <i class="fa fa-user fa-fw" aria-hidden="true"></i>
+                            <a *ngIf="account.ContactPersonSourceKey"
+                               [routerLink]="['/contact',account.ContactPersonSourceKey]">{{account.ContactPersonName}}</a>
+                            <a *ngIf="!account.ContactPersonSourceKey">{{account.ContactPersonName}}</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <i class="fa fa-envelope fa-fw" aria-hidden="true"></i>
+                            <a href="mailto:{{account.ContactPersonEmail}}">{{account.ContactPersonEmail}}</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-5">
+                <table class="table table-condensed">
+                    <tbody>
+                    <tr>
+                        <td class="text-left" style="max-width: 25px;" width="25px">
+                            <i class="fa fa-home fa-fw" aria-hidden="true"></i>
+                        </td>
+                        <td class="text-left">
+                            <span *ngIf="account.AddressLine1">{{account.AddressLine1}}</span><span
+                                *ngIf="account.AddressLine1"><br/></span>
+                            <span *ngIf="account.AddressPostalCode">{{account.AddressPostalCode}}</span><span
+                                *ngIf="account.AddressPostalCode"></span>
+                            <span *ngIf="account.AddressCity">{{account.AddressCity}}</span><span
+                                *ngIf="account.AddressCity"><br/></span>
+                            <span *ngIf="account.AddressCountry">{{account.AddressCountry}}</span>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

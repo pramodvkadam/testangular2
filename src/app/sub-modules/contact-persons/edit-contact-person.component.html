@@ -1,0 +1,221 @@
+<route-modal [hideCloseButton]="true">
+    <modal-header>
+        <h2>Add/Edit Contact</h2>
+    </modal-header>
+    <modal-content>
+        <form *ngIf="active" (ngSubmit)="onSubmit()" [formGroup]="contactForm" class="form-horizontal">
+            <div class="form-group"
+                 [ngClass]="{'has-error':contactForm.controls.Title.invalid && submitted,'has-success':contactForm.controls.Title.valid && submitted}">
+                <label class="col-md-4 control-label" for="Title">Title</label>
+                <div class="col-md-6">
+                    <select class="form-control"
+                            formControlName="Title"
+                            id="Title"
+                            name="Title">
+                        <option value="">Choose Title</option>
+                        <option>Dr</option>
+                        <option>Drs.</option>
+                        <option>Mr</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group"
+                 [ngClass]="{'has-error':contactForm.controls.Initials.invalid && submitted,
+                       'has-success':contactForm.controls.Initials.valid && submitted}">
+                <label class="col-md-4 control-label" for="Initials">Initials</label>
+                <div class="col-md-6">
+                    <input
+                            type="text"
+                            id="Initials"
+                            class="form-control"
+                            formControlName="Initials">
+                </div>
+            </div>
+            <div class="form-group"
+                 [ngClass]="{'has-error':contactForm.controls.FirstName.invalid && submitted,
+                       'has-success':contactForm.controls.FirstName.valid && submitted}">
+                <label class="col-md-4 control-label" for="FirstName">FirstName</label>
+                <div class="col-md-6">
+                    <input
+                            type="text"
+                            id="FirstName"
+                            class="form-control"
+                            formControlName="FirstName">
+                </div>
+            </div>
+            <div class="form-group"
+                 [ngClass]="{'has-error':contactForm.controls.Insertion.invalid && submitted,
+                   'has-success':contactForm.controls.Insertion.valid && submitted}">
+                <label class="col-md-4 control-label" for="Insertion">Insertion</label>
+                <div class="col-md-6">
+                    <input
+                            type="text"
+                            id="Insertion"
+                            class="form-control"
+                            formControlName="Insertion">
+                </div>
+            </div>
+            <div class="form-group"
+                 [ngClass]="{'has-error':contactForm.controls.LastName.invalid && submitted,
+                   'has-success':contactForm.controls.LastName.valid && submitted}">
+                <label for="LastName" class="col-md-4 control-label">Last Name</label>
+                <div class="col-md-6">
+                    <input
+                            type="text"
+                            id="LastName"
+                            class="form-control"
+                            formControlName="LastName">
+                    <span *ngIf="contactForm.controls.LastName.invalid && submitted"
+                          class="help-block alert alert-danger">
+                      LastName is required
+                  </span>
+                </div>
+            </div>
+            <div class="form-group"
+                 [ngClass]="{'has-error':contactForm.controls.JobTitle.invalid && submitted,
+                   'has-success':contactForm.controls.JobTitle.valid && submitted}">
+                <label class="col-md-4 control-label" for="JobTitle">JobTitle</label>
+                <div class="col-md-6">
+                    <select class="form-control"
+                            formControlName="JobTitle"
+                            id="JobTitle"
+                            name="JobTitle">
+                        <option *ngFor="let jobTitle of jobTitles" [value]="(!jobTitle.Id)?'':jobTitle.Name">
+                            {{jobTitle.Name}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group"
+                 [ngClass]="{'has-error':contactForm.controls.Gender.invalid && submitted,
+                   'has-success':contactForm.controls.Gender.valid && submitted}">
+                <label class="col-md-4 control-label" for="Gender">Gender</label>
+                <div class="col-md-6">
+                    <select class="form-control"
+                            formControlName="Gender" id="Gender"
+                            name="Gender">
+                        <option value="">Choose Gender</option>
+                        <option value="1">Male</option>
+                        <option value="2">Female</option>
+                        <option value="0">Unknown</option>
+                    </select>
+                    <span *ngIf="contactForm.controls.Gender.invalid && submitted"
+                          class="help-block alert alert-danger">
+                      Gender is required
+                  </span>
+                </div>
+            </div>
+            <div class="form-group"
+                 [ngClass]="{'has-error':contactForm.controls.Department.invalid && submitted,
+                   'has-success':contactForm.controls.Department.valid && submitted}">
+                <label class="col-md-4 control-label" for="Department">Department</label>
+                <div class="col-md-6">
+                    <input
+                            type="text"
+                            id="Department"
+                            class="form-control"
+                            formControlName="Department">
+                </div>
+            </div>
+            <div class="form-group"
+                 [ngClass]="{'has-error':contactForm.controls.LanguageId.invalid && submitted,
+                   'has-success':contactForm.controls.LanguageId.valid && submitted}">
+                <label class="col-md-4 control-label" for="LanguageId">LanguageId</label>
+                <div class="col-md-6">
+                    <select class="form-control" ID="LanguageId"
+                            formControlName="LanguageId"
+                            name="LanguageId">
+                        <option *ngFor="let language of languages" [value]="language.Id">{{language.Name}}</option>
+                    </select>
+                    <span *ngIf="contactForm.controls.LanguageId.invalid && submitted"
+                          class="help-block alert alert-danger">
+                      Language is required
+                  </span>
+                </div>
+            </div>
+            <div class="form-group"
+                 [ngClass]="{'has-error':contactForm.controls.PhoneNumber.invalid && submitted,
+                   'has-success':contactForm.controls.PhoneNumber.valid && submitted}">
+                <label class="col-md-4 control-label" for="PhoneNumber">PhoneNumber</label>
+                <div class="col-md-6">
+                    <input
+                            type="text"
+                            id="PhoneNumber"
+                            class="form-control"
+                            formControlName="PhoneNumber">
+                    <span *ngIf="contactForm.controls.PhoneNumber.invalid && submitted"
+                          class="help-block alert alert-danger">
+                      PhoneNumber is invalid
+                  </span>
+                </div>
+            </div>
+            <div class="form-group"
+                 [ngClass]="{'has-error':contactForm.controls.Fax.invalid && submitted,
+                   'has-success':contactForm.controls.Fax.valid && submitted}">
+                <label class="col-md-4 control-label" for="Fax">Fax</label>
+                <div class="col-md-6">
+                    <input
+                            type="text"
+                            id="Fax"
+                            class="form-control"
+                            formControlName="Fax">
+                    <span *ngIf="contactForm.controls.Fax.invalid && submitted" class="help-block alert alert-danger">
+                      Fax is invalid
+                  </span>
+                </div>
+            </div>
+            <div class="form-group"
+                 [ngClass]="{'has-error':contactForm.controls.MobileNumber.invalid && submitted,
+                   'has-success':contactForm.controls.MobileNumber.valid && submitted}">
+                <label class="col-md-4 control-label" for="MobileNumber">MobileNumber</label>
+                <div class="col-md-6">
+                    <input
+                            type="text"
+                            id="MobileNumber"
+                            class="form-control"
+                            formControlName="MobileNumber">
+                    <span *ngIf="contactForm.controls.MobileNumber.invalid && submitted"
+                          class="help-block alert alert-danger">
+                      MobileNumber is invalid
+                  </span>
+                </div>
+            </div>
+            <div class="col-xs-10">
+                <label class="col-md-4 control-label">Emails</label>
+                <button
+                        type="button"
+                        class="btn btn-primary"
+                        (click)="onAddEmail()">+
+                </button>
+                <ul class="list-group" formArrayName="Emails">
+                    <div class="row"
+                         *ngFor="let email of contactForm.controls['Emails'].controls; let i = index">
+                        <div class="col-sm-10">
+                            <input
+                                    type="text"
+                                    class="form-control"
+                                    formControlName="{{i}}">
+                            <span *ngIf="email.invalid && submitted" class="help-block alert alert-danger">
+                      Email is invalid
+                  </span>
+                        </div>
+                        <div class="col-sm-2">
+                            <button class="btn btn-danger" (click)="onRemoveEmail(i)">X</button>
+                        </div>
+                    </div>
+                    <br><br>
+                </ul>
+            </div>
+            <div class="form-group">
+                <label class="col-md-4 control-label"></label>
+                <div class="col-md-6">
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-check" aria-hidden="true"></i> Save
+                    </button>
+                    <a class="btn btn-primary" (click)="navigateBack()"><i class="fa fa-close" aria-hidden="true"></i>
+                        Cancel</a>
+
+                </div>
+            </div>
+        </form>
+    </modal-content>
+</route-modal>
