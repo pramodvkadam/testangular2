@@ -21,6 +21,7 @@ import {InfiniteScrollModule} from "angular2-infinite-scroll";
 import {CampsiteService} from "./shared/campsite.service";
 import {EmitterService} from "./shared/emitter.service";
 import {AcsiService} from "./shared/acsi.service";
+import {DocumentServiceService} from "./sub-modules/documents/document-service.service";
 
 
 @NgModule({
@@ -46,7 +47,7 @@ import {AcsiService} from "./shared/acsi.service";
             return new HttpService(backend, options);
         },
         deps: [XHRBackend, RequestOptions]
-    }, CampsiteService, AcsiService],
+    }, CampsiteService, AcsiService, DocumentServiceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

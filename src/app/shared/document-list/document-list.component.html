@@ -21,7 +21,7 @@
                 <span *ngIf="field.datatype !== 'command'">{{(field.valueFormatter === 'date')?(document[field.field] | date:'dd-MM-yyyy: HH.mm'):document[field.field]}}</span>
                 <span *ngIf="field.datatype === 'command'">
                         <a (click)="deleteDocument(document.Id,i)"><i class="fa fa-trash" aria-hidden="true"></i></a>
-                    <!--<download-file [type]="'document'" [id]="document.Id"></download-file>-->
+                    <acsi-download [type]="'document'" [id]="document.Id"></acsi-download>
                     </span>
             </td>
         </tr>

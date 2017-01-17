@@ -8,6 +8,7 @@ import {DataTableModule} from "angular2-datatable";
 import {SafeHtmlPipe} from "./safe-html.pipe";
 import {Nl2brPipe} from "./nl2br.pipe";
 import {DocumentListComponent} from "./document-list/document-list.component";
+import {DownloadComponent} from "./download/download.component";
 
 @NgModule({
     exports: [
@@ -18,10 +19,12 @@ import {DocumentListComponent} from "./document-list/document-list.component";
         TranslateModule,
         DataTableModule,
         SafeHtmlPipe,
-        Nl2brPipe
+        Nl2brPipe,
+        DocumentListComponent,
+        DownloadComponent
     ],
     imports: [DataTableModule, CommonModule],
-    declarations: [SafeHtmlPipe, Nl2brPipe, DocumentListComponent]
+    declarations: [SafeHtmlPipe, Nl2brPipe, DocumentListComponent, DownloadComponent]
 })
 export class SharedModule {
 }

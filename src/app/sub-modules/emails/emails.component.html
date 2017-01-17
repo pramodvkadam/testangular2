@@ -42,11 +42,13 @@
                     </div>
 
                 </div>
-                <!--<div *ngIf="field.datatype === 'command'">-->
-                <!--<span *ngIf="null !== email.Attachments && email.Attachments.length">-->
-                <!--<download-file *ngFor="let attachment of email.Attachments" title="{{attachment.Name}}" [isSourceCrm2011]="email.IsSourceCrm2011" [type]="'email'" [id]="attachment.Id"></download-file>-->
-                <!--</span>-->
-                <!--</div>-->
+                <div *ngIf="field.datatype === 'command'">
+                <span *ngIf="null !== email.Attachments && email.Attachments.length">
+                <acsi-download *ngFor="let attachment of email.Attachments" title="{{attachment.Name}}"
+                               [isSourceCrm2011]="email.IsSourceCrm2011" [type]="'email'"
+                               [id]="attachment.Id"></acsi-download>
+                </span>
+                </div>
             </td>
         </tr>
         </tbody>

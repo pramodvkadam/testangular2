@@ -22,6 +22,7 @@ export class DocumentListComponent implements OnInit {
 
     ngOnInit() {
         this.fields = this.documentService.getDocumentsFields();
+        this.filterData("", "Id");
     }
 
     deleteDocument(documentId: string, index: number) {

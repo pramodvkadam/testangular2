@@ -35,6 +35,35 @@ export class DocumentServiceService {
         return body || {}
     }
 
+    getDocumentById(documentId: string, type: string, isSourceCrm2011: boolean = false) {
+
+        let documentUrl = (type === 'document') ? `${this.documentUrl}${documentId}` : `${APP_CONFIG.apiUrl}campsite/activityattachment/${documentId}/${isSourceCrm2011}`;
+
+        return this.http.get(documentUrl)
+            .map(this.extractData);
+    }
+
+    base64ToBlobConvert(data: any) {
+        // decode base64 string, remove space for IE compatibility
+        var binary = atob(data.Data.replace(/\s/g, ''));
+
+        // get binary length
+        var len = binary.length;
+
+        // create ArrayBuffer with binary length
+        var buffer = new ArrayBuffer(len);
+
+        // create 8-bit Array
+        var view = new Uint8Array(buffer);
+
+        // save unicode of binary data into 8-bit Array
+        for (var i = 0; i < len; i++) {
+            view[i] = binary.charCodeAt(i);
+        }
+
+        return new Blob([view], {type: data.FileType});
+    }
+
     getDocumentsFields() {
         return [{
             field: "Action",

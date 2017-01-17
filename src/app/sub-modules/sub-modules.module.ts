@@ -17,6 +17,7 @@ import {AddressService} from "./addresses/address.service";
 import {EditAddressComponent} from "./addresses/edit-address.component";
 import {ContactPersonService} from "./contact-persons/contact-person.service";
 import {EditContactPersonComponent} from "./contact-persons/edit-contact-person.component";
+import {UploadDocumentComponent} from "./documents/upload-document/upload-document.component";
 
 @NgModule({
     imports: [
@@ -34,7 +35,8 @@ import {EditContactPersonComponent} from "./contact-persons/edit-contact-person.
         TodosComponent,
         NotesComponent,
         EditAddressComponent,
-        EditContactPersonComponent
+        EditContactPersonComponent,
+        UploadDocumentComponent
     ],
     providers: [EmailService, AddressService, ContactPersonService]
 })

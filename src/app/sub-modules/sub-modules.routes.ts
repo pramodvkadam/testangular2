@@ -9,6 +9,7 @@ import {ResponsesComponent} from "./responses/responses.component";
 import {TasksComponent} from "./tasks/tasks.component";
 import {EditAddressComponent} from "./addresses/edit-address.component";
 import {EditContactPersonComponent} from "./contact-persons/edit-contact-person.component";
+import {UploadDocumentComponent} from "./documents/upload-document/upload-document.component";
 
 const MODULE_ROUTES: Routes = [
     {
@@ -26,7 +27,10 @@ const MODULE_ROUTES: Routes = [
         {path: 'add', component: EditContactPersonComponent},
         {path: ':contactId', component: EditContactPersonComponent}]
     },
-    {path: 'documents', component: DocumentsComponent},
+    {
+        path: 'documents', component: DocumentsComponent, children: [
+        {path: 'upload', component: UploadDocumentComponent}]
+    },
     {path: 'memos', component: MemosComponent},
     {path: 'attributes', component: AttributesComponent},
     {path: 'responses', component: ResponsesComponent},
