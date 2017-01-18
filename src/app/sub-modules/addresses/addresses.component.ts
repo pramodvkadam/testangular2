@@ -49,5 +49,4 @@ export class AddressesComponent implements OnInit {
             item[column].toLocaleLowerCase().match(filterString));
         this.filteredData = filteredData;
     }
-
 }

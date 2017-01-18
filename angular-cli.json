@@ -1,7 +1,7 @@
 {
   "project": {
-    "version": "1.0.0-beta.21",
-    "name": "Portal"
+    "version": "1.0.0-beta.25.5",
+    "name": "b2b-portal"
   },
   "apps": [
     {
@@ -9,9 +9,7 @@
       "outDir": "dist",
       "assets": [
         "assets",
-        "favicon.ico",
-        "manifest.json",
-        "service-worker.js"
+        "favicon.ico"
       ],
       "index": "index.html",
       "main": "main.ts",

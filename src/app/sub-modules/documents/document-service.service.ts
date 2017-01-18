@@ -3,6 +3,7 @@ import {HttpService} from "../../shared/http.service";
 import {APP_CONFIG} from "../../shared/app.config";
 import {Response} from "@angular/http";
 import {Observable} from "rxjs";
+import {Document} from "./document";
 
 @Injectable()
 export class DocumentServiceService {
@@ -40,6 +41,11 @@ export class DocumentServiceService {
         let documentUrl = (type === 'document') ? `${this.documentUrl}${documentId}` : `${APP_CONFIG.apiUrl}campsite/activityattachment/${documentId}/${isSourceCrm2011}`;
 
         return this.http.get(documentUrl)
+            .map(this.extractData);
+    }
+
+    uploadDocument(entityId: string, entityType: number, documents: Document[]) {
+        return this.http.put(`${this.documentUrl}upload/${entityId}/${entityType}`, documents)
             .map(this.extractData);
     }
 

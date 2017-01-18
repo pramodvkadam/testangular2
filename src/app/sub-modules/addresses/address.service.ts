@@ -1,4 +1,4 @@
-import {Injectable} from "@angular/core";
+import {Injectable, EventEmitter} from "@angular/core";
 import {APP_CONFIG} from "../../shared/app.config";
 import {HttpService} from "../../shared/http.service";
 import {Response} from "@angular/http";
@@ -10,11 +10,12 @@ export class AddressService {
 
     private apiUrl: string = "";
     private addressUrl: string = "";
+    public addressUpdateEvent$: EventEmitter<any>;
 
     constructor(private http: HttpService) {
         this.apiUrl = `${APP_CONFIG.apiUrl}campsite/account/addresses/`;
-
         this.addressUrl = `${APP_CONFIG.apiUrl}campsite/address/`;
+        this.addressUpdateEvent$ = new EventEmitter();
     }
 
     getAddressesByEntity(entityNumber: number, entityType: number): Observable<Address[]> {

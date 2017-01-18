@@ -9,6 +9,7 @@ import {SafeHtmlPipe} from "./safe-html.pipe";
 import {Nl2brPipe} from "./nl2br.pipe";
 import {DocumentListComponent} from "./document-list/document-list.component";
 import {DownloadComponent} from "./download/download.component";
+import {FileUploadModule} from "ng2-file-upload";
 
 @NgModule({
     exports: [
@@ -21,7 +22,8 @@ import {DownloadComponent} from "./download/download.component";
         SafeHtmlPipe,
         Nl2brPipe,
         DocumentListComponent,
-        DownloadComponent
+        DownloadComponent,
+        FileUploadModule
     ],
     imports: [DataTableModule, CommonModule],
     declarations: [SafeHtmlPipe, Nl2brPipe, DocumentListComponent, DownloadComponent]
