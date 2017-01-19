@@ -1,7 +1,7 @@
 import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
-import {ModalModule} from "ng2-modal";
 import {ReactiveFormsModule} from "@angular/forms";
+import {MyDatePickerModule} from "mydatepicker";
 import {TranslateModule} from "ng2-translate";
 import {Ng2BootstrapModule} from "ng2-bootstrap";
 import {DataTableModule} from "angular2-datatable";
@@ -10,6 +10,7 @@ import {Nl2brPipe} from "./nl2br.pipe";
 import {DocumentListComponent} from "./document-list/document-list.component";
 import {DownloadComponent} from "./download/download.component";
 import {FileUploadModule} from "ng2-file-upload";
+import {ModalModule} from "ngx-modal";
 
 @NgModule({
     exports: [
@@ -23,7 +24,8 @@ import {FileUploadModule} from "ng2-file-upload";
         Nl2brPipe,
         DocumentListComponent,
         DownloadComponent,
-        FileUploadModule
+        FileUploadModule,
+        MyDatePickerModule
     ],
     imports: [DataTableModule, CommonModule],
     declarations: [SafeHtmlPipe, Nl2brPipe, DocumentListComponent, DownloadComponent]

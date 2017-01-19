@@ -1,0 +1,89 @@
+<section>
+    <h4>Todo</h4>
+
+    <form class="form-horizontal" (ngSubmit)="onTodoSubmit()" #todoForm="ngForm">
+
+        <div class="form-group">
+            <label class="col-md-3" for="todo-date">Date</label>
+            <div class="col-md-9">
+                <my-date-picker></my-date-picker>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-3" for="todo-description">To-Do</label>
+            <div class="col-md-9">
+                <textarea class="form-control" maxlength="100" rows="2" name="Description" #Description="ngModel"
+                          [(ngModel)]="todo.Description" id="todo-description" required></textarea>
+            </div>
+            <div [hidden]="Description.valid || Description.pristine" class="alert alert-danger">
+                Description is required
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3">Owner</label>
+            <div class="col-md-9">
+                <select class="form-control" required
+                        [(ngModel)]="todo.OwnerId"
+                        name="OwnerId" #OwnerId="ngModel">
+                    <option *ngFor="let user of users" [value]="user.Id">{{user.Name}}</option>
+                </select>
+                <div [hidden]="OwnerId.valid || OwnerId.pristine" class="alert alert-danger">
+                    Owner is required
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3" for="Priorities">Priority</label>
+            <div class="col-md-9">
+                <select class="form-control"
+                        [(ngModel)]="todo.Priority"
+                        name="Priority" #Priority="ngModel">
+                    <option *ngFor="let taksPriority of taksPriorities" [value]="taksPriority.Id">
+                        {{taksPriority.Name}}
+                    </option>
+                </select>
+                <div [hidden]="Priority.valid || Priority.pristine" class="alert alert-danger">
+                    Priority is required
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3" for="Status">Status</label>
+            <div class="col-md-9">
+                <select class="form-control"
+                        [(ngModel)]="todo.StatusCode"
+                        name="StatusCode" #StatusCode="ngModel">
+                    <option *ngFor="let taksStatus of taksStatuses" [value]="taksStatus.Id">{{taksStatus.Name}}</option>
+                </select>
+                <div [hidden]="StatusCode.valid || StatusCode.pristine" class="alert alert-danger">
+                    Status is required
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3" for="Done">Task Status</label>
+            <div class="col-md-9">
+                <select class="form-control" required
+                        [(ngModel)]="todo.IsDone"
+                        name="IsDone" #IsDone="ngModel">
+                    <option value="true">Done</option>
+                    <option value="false">Not Done</option>
+                </select>
+                <div [hidden]="IsDone.valid || IsDone.pristine" class="alert alert-danger">
+                    Done is required
+                </div>
+            </div>
+        </div>
+        <div class="form-group text-right">
+            <div class="col-md-9 col-md-offset-3">
+                <button type="submit" [disabled]="!todoForm.valid" class="btn btn-primary"><i class="fa fa-check"
+                                                                                              aria-hidden="true"></i>
+                    Save
+                </button>
+                <a type="submit" class="btn btn-default" (click)="closeTodo()"><i class="fa fa-undo"
+                                                                                  aria-hidden="true"></i> Cancel</a>
+            </div>
+        </div>
+    </form>
+</section>

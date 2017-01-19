@@ -18,6 +18,10 @@ import {EditAddressComponent} from "./addresses/edit-address.component";
 import {ContactPersonService} from "./contact-persons/contact-person.service";
 import {EditContactPersonComponent} from "./contact-persons/edit-contact-person.component";
 import {UploadDocumentComponent} from "./documents/upload-document/upload-document.component";
+import {MemoService} from "./memos/memo.service";
+import {EditMemoComponent} from "./memos/edit-memo/edit-memo.component";
+import {TodoService} from "./todos/todo.service";
+import {EditTodoComponent} from "./todos/edit-todo.component";
 
 @NgModule({
     imports: [
@@ -36,9 +40,15 @@ import {UploadDocumentComponent} from "./documents/upload-document/upload-docume
         NotesComponent,
         EditAddressComponent,
         EditContactPersonComponent,
-        UploadDocumentComponent
+        UploadDocumentComponent,
+        EditMemoComponent,
+        NotesComponent,
+        EditTodoComponent
     ],
-    providers: [EmailService, AddressService, ContactPersonService]
+    providers: [EmailService,
+        AddressService,
+        ContactPersonService,
+        MemoService, TodoService]
 })
 export class SubModulesModule {
 }

@@ -1,3 +1,23 @@
-<p>
-    todos works!
-</p>
+<div>
+    <div id="todo-list">
+        <h4>Todo List</h4>
+        <div class="well" [class.active]="task.TaskId === todo.TaskId"
+             *ngFor="let task of todos;let i=index;" (click)="editTodo(task)">
+            <a (click)="deleteTask(task.TaskId,i);"><i class="fa fa-trash-o pull-right"></i></a>
+            <dl class="dl-horizontal">
+                <dt>Date</dt>
+                <dd>{{task.TodoDate | date : 'dd/MM/yyyy'}}</dd>
+                <dt>To-Do</dt>
+                <dd>{{task.Description}}</dd>
+                <dt>Owner</dt>
+                <dd>{{task.OwnerName}}</dd>
+                <dt>Priority</dt>
+                <dd>{{taksPriorities[task.Priority]?.Name}}</dd>
+                <dt>Status</dt>
+                <dd>{{getStatusName(task.StatusCode)}}</dd>
+                <dt>Task status</dt>
+                <dd>{{(task.Isdone == true)?'Done':'Not Done'}}</dd>
+            </dl>
+        </div>
+    </div>
+</div>

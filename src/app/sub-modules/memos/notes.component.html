@@ -1,3 +1,26 @@
-<p>
-    notes works!
-</p>
+<section>
+    <h4>Notes</h4>
+    <form class="form-inline" *ngIf="active" [formGroup]="noteForm" (ngSubmit)="onNoteSubmit()">
+        <div class="form-group">
+            <textarea class="form-control" cols="12" id="textarea" name="textarea" formControlName="NoteText"
+                      style="min-width: 300px;">Your note</textarea>
+        </div>
+
+        <button id="" type="submit" name="" class="btn btn-primary" [disabled]="!noteForm.valid"><i class="fa fa-check"
+                                                                                                    aria-hidden="true"></i>
+            Save
+        </button>
+    </form>
+
+</section>
+<section>
+    <div class="notes">
+        <dl class="dl-horizontal well" *ngFor="let note of notes;let i=index;">
+            <a (click)="deleteNote(note.Id,i);"><i class="fa fa-trash-o pull-right"></i></a>
+            <dt>{{note.CreatedOn | date : 'dd/MM/yyyy'}}</dt>
+            <dd>{{note.Owner}}</dd>
+            <dt></dt>
+            <dd>{{note.NoteText}}</dd>
+        </dl>
+    </div>
+</section>

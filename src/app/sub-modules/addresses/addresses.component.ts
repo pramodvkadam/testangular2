@@ -25,6 +25,9 @@ export class AddressesComponent implements OnInit {
                 private router: Router,
                 private route: ActivatedRoute,
                 public toastr: ToastsManager) {
+        this.addressService.addressUpdateEvent$.subscribe(() => {
+            this.getData();
+        });
     }
 
     ngOnInit() {
@@ -33,13 +36,17 @@ export class AddressesComponent implements OnInit {
                 this.entityNumber = params['accountNumber'];
                 this.entityType = Number(!this.entityNumber);
                 this.fields = this.addressService.getAddressFields();
-                this.addressService.getAddressesByEntity(this.entityNumber, this.entityType).subscribe(
-                    (addresses: Address[]) => {
-                        this.filteredData = this.addresses = addresses;
-                    }, error => {
-                        let errors = error.json();
-                        this.toastr.error(errors.ExceptionMessage || errors.Message, "Oops!");
-                    })
+                this.getData();
+            });
+    }
+
+    getData() {
+        this.addressService.getAddressesByEntity(this.entityNumber, this.entityType).subscribe(
+            (addresses: Address[]) => {
+                this.filteredData = this.addresses = addresses;
+            }, error => {
+                let errors = error.json();
+                this.toastr.error(errors.ExceptionMessage || errors.Message, "Oops!");
             });
     }
 

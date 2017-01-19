@@ -167,6 +167,7 @@ export class EditAddressComponent implements OnInit {
                     this.submitted = false;
                     this.addressService.addressUpdateEvent$.emit(true);
                     this.toastr.success(`Address ${this.isNew ? 'added' : 'updated'} successfully!`);
+                    this.navigateBack();
                 }, error => {
                     let errors = error.json();
                     this.toastr.error(errors.ExceptionMessage || "Server Error", "Oops!");

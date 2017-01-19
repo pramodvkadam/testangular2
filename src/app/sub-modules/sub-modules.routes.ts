@@ -10,6 +10,8 @@ import {TasksComponent} from "./tasks/tasks.component";
 import {EditAddressComponent} from "./addresses/edit-address.component";
 import {EditContactPersonComponent} from "./contact-persons/edit-contact-person.component";
 import {UploadDocumentComponent} from "./documents/upload-document/upload-document.component";
+import {EditMemoComponent} from "./memos/edit-memo/edit-memo.component";
+import {EditTodoComponent} from "./todos/edit-todo.component";
 
 const MODULE_ROUTES: Routes = [
     {
@@ -31,10 +33,30 @@ const MODULE_ROUTES: Routes = [
         path: 'documents', component: DocumentsComponent, children: [
         {path: 'upload', component: UploadDocumentComponent}]
     },
-    {path: 'memos', component: MemosComponent},
-    {path: 'attributes', component: AttributesComponent},
-    {path: 'responses', component: ResponsesComponent},
-    {path: 'tasks', component: TasksComponent}
+    {
+        path: 'memos', component: MemosComponent, children: [
+        {path: 'add', component: EditMemoComponent},
+        {
+            path: ':memoId', component: EditMemoComponent, children: [
+            {path: 'todo', component: EditTodoComponent},
+            {path: 'todo/:todoId', component: EditTodoComponent}]
+        }]
+    },
+    {
+        path: 'attributes', component: AttributesComponent, children: [
+        {path: 'add', component: EditContactPersonComponent},
+        {path: ':contactId', component: EditContactPersonComponent}]
+    },
+    {
+        path: 'responses', component: ResponsesComponent, children: [
+        {path: 'add', component: EditContactPersonComponent},
+        {path: ':contactId', component: EditContactPersonComponent}]
+    },
+    {
+        path: 'tasks', component: TasksComponent, children: [
+        {path: 'add', component: EditContactPersonComponent},
+        {path: ':contactId', component: EditContactPersonComponent}]
+    }
 
 ];
 
