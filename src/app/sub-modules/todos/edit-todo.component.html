@@ -4,9 +4,13 @@
     <form class="form-horizontal" (ngSubmit)="onTodoSubmit()" #todoForm="ngForm">
 
         <div class="form-group">
-            <label class="col-md-3" for="todo-date">Date</label>
+            <label class="col-md-3" for="TodoDate">Date</label>
             <div class="col-md-9">
-                <my-date-picker></my-date-picker>
+                <my-date-picker name="Description" #TodoDate="ngModel"
+                                [(ngModel)]="todo.TodoDate" id="TodoDate" required></my-date-picker>
+            </div>
+            <div [hidden]="TodoDate.valid || TodoDate.pristine" class="alert alert-danger">
+                Todo Date is required
             </div>
         </div>
 

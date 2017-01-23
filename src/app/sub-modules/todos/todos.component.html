@@ -1,8 +1,8 @@
 <div>
-    <div id="todo-list">
+    <div id="todo-list" *ngIf="todos">
         <h4>Todo List</h4>
-        <div class="well" [class.active]="task.TaskId === todo.TaskId"
-             *ngFor="let task of todos;let i=index;" (click)="editTodo(task)">
+        <div class="well" [class.active]="task.TaskId === todo"
+             *ngFor="let task of todos;let i=index;" (click)="editTodo(task.TaskId)">
             <a (click)="deleteTask(task.TaskId,i);"><i class="fa fa-trash-o pull-right"></i></a>
             <dl class="dl-horizontal">
                 <dt>Date</dt>

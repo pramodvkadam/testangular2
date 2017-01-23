@@ -61,7 +61,7 @@
                                 Cancel
                             </button>
                             <a type="button" [routerLink]="[memo.MemoId?'todo':'']"
-                               [queryParams]="{accountId:entityId,taskEntityType:taskEntityType}"
+                               [preserveQueryParams]="true"
                                class="btn btn-secondary"
                             >
                                 <i class="fa fa-link"></i> Link to-do

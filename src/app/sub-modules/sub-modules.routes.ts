@@ -12,6 +12,7 @@ import {EditContactPersonComponent} from "./contact-persons/edit-contact-person.
 import {UploadDocumentComponent} from "./documents/upload-document/upload-document.component";
 import {EditMemoComponent} from "./memos/edit-memo/edit-memo.component";
 import {EditTodoComponent} from "./todos/edit-todo.component";
+import {TaskEntityType} from "./todos/task-entity-type.enum";
 
 const MODULE_ROUTES: Routes = [
     {
@@ -39,7 +40,10 @@ const MODULE_ROUTES: Routes = [
         {
             path: ':memoId', component: EditMemoComponent, children: [
             {path: 'todo', component: EditTodoComponent},
-            {path: 'todo/:todoId', component: EditTodoComponent}]
+            {path: 'todo/:todoId', component: EditTodoComponent}],
+            data: {
+                taskEntityType: TaskEntityType.Memo
+            }
         }]
     },
     {
@@ -57,7 +61,6 @@ const MODULE_ROUTES: Routes = [
         {path: 'add', component: EditContactPersonComponent},
         {path: ':contactId', component: EditContactPersonComponent}]
     }
-
 ];
 
 export const moduleRouting = RouterModule.forChild(MODULE_ROUTES);

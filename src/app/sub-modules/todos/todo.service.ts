@@ -19,7 +19,7 @@ export class TodoService {
     }
 
     getTodosByEntity(entityNumber: number, entityType: number): Observable<Todo[]> {
-        return this.http.get(`${this.todoUrl}/gettasks/${entityType}/${entityNumber}`)
+        return this.http.get(`${this.todoUrl}gettasks/${entityType}/${entityNumber}`)
             .map(this.extractData);
     }
 
@@ -30,7 +30,12 @@ export class TodoService {
     }
 
     getTodoById(todoId: number|string) {
-        return this.http.get(`${this.todoUrl}/${todoId}`)
+        return this.http.get(`${this.todoUrl}${todoId}`)
+            .map(this.extractData);
+    }
+
+    deleteTaskById(taskId: string) {
+        return this.http.put(`${this.todoUrl}delete/${taskId}`, {})
             .map(this.extractData);
     }
 
