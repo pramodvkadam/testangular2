@@ -1,6 +1,4 @@
-<a class="btn btn-primary pull-right" [routerLink]="['add']" [preserveQueryParams]="true"><i class="fa fa-plus"
-                                                                                             aria-hidden="true"></i> Add
-    Memo</a>
+<br>
 <br/>
 <br/>
 
@@ -24,14 +22,15 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let memo of mf.data; let i = index;">
+        <tr *ngFor="let task of mf.data; let i = index;">
             <td *ngFor="let field of fields">
-                <span *ngIf="field.datatype !== 'command'">{{(field.valueFormatter === 'date')?(memo[field.field] | date:'dd-MM-yyyy: HH.mm'):memo[field.field]}}</span>
+                <span *ngIf="field.datatype !== 'command'">{{(field.valueFormatter === 'date')?(task[field.field] | date:'dd-MM-yyyy: HH.mm'):task[field.field]}}</span>
                 <span *ngIf="field.datatype === 'command'">
-                        <a [routerLink]="[memo.MemoId]" [preserveQueryParams]="true"><i class="fa fa-edit"
-                                                                                        aria-hidden="true"></i></a>
-                        <a (click)="deleteMemo(memo.MemoId,i)"><i class="fa fa-trash" aria-hidden="true"></i></a>
-                    </span>
+                      <a (click)="delete(task.Id,i)" *ngIf="task.Type !== 'Active'"><i class="fa fa-trash"
+                                                                                       aria-hidden="true"></i></a>
+                        <a (click)="navigateToRelative(task)"><i
+                                class="fa fa-link"></i></a>
+        </span>
             </td>
         </tr>
         </tbody>

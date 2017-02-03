@@ -4,6 +4,7 @@ import {Subscription} from "rxjs";
 import {Router, ActivatedRoute, Params} from "@angular/router";
 import {ToastsManager} from "ng2-toastr";
 import {MemoService} from "./memo.service";
+import {EntityType} from "../../shared/entity-type.enum";
 
 @Component({
     selector: 'acsi-memos',
@@ -18,8 +19,6 @@ export class MemosComponent implements OnInit {
     private memos: Memo[];
     private filteredData: Array<Memo>;
     private fields: any;
-    collapsed: boolean = false;
-    collapsedMail: string;
 
     constructor(private memoService: MemoService,
                 private router: Router,
@@ -33,8 +32,9 @@ export class MemosComponent implements OnInit {
     ngOnInit() {
         this.subscription = this.route.params.subscribe(
             (params: Params) => {
-                this.entityNumber = params['accountNumber'];
-                this.entityType = Number(!this.entityNumber);
+                this.entityType = this.route.snapshot.parent.data['entityType'];
+                this.entityNumber = this.entityType === EntityType.Account ?
+                    params['accountNumber'] : params['contactNumber'];
                 this.fields = this.memoService.getMemosFields();
                 this.getData();
             });

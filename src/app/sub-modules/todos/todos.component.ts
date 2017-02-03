@@ -32,17 +32,13 @@ export class TodosComponent implements OnInit {
                 public router: Router,
                 public route: ActivatedRoute,
                 public toastr: ToastsManager) {
+        this.todoService.todoUpdateEvent$.subscribe((event: boolean) => {
+            this.getTodos();
+        })
     }
 
     ngOnInit() {
-        this.todoService.getTodosByEntity(this.taskEntityId, this.taskEntityType)
-            .subscribe((todos: Todo[]) => {
-                this.todos = todos;
-                console.log(this.todos[0]);
-            }, error => {
-                let errors = error.json();
-                this.toastr.error(errors.ExceptionMessage);
-            });
+        this.getTodos();
         this.acsiService.getUsers().subscribe((users: any[]) => {
                 this.users = users;
             },
@@ -65,6 +61,16 @@ export class TodosComponent implements OnInit {
             let errors = error.json();
             this.toastr.error(errors.ExceptionMessage);
         })
+    }
+
+    getTodos() {
+        this.todoService.getTodosByEntity(this.taskEntityId, this.taskEntityType)
+            .subscribe((todos: Todo[]) => {
+                this.todos = todos;
+            }, error => {
+                let errors = error.json();
+                this.toastr.error(errors.ExceptionMessage);
+            });
     }
 
     getOwnerName(userId: string) {

@@ -1,4 +1,4 @@
-import {Component, OnInit, OnDestroy} from "@angular/core";
+import {Component, OnInit, OnDestroy, ViewChild} from "@angular/core";
 import {ContactPerson} from "./contact-person";
 import {Subscription} from "rxjs";
 import {ContactPersonService} from "./contact-person.service";
@@ -24,6 +24,8 @@ export class EditContactPersonComponent implements OnInit,OnDestroy {
     private submitted: boolean;
     private parentRouteId: any;
     private sub: Subscription;
+    @ViewChild('contactModal') contactModal: any;
+
 
     constructor(private route: ActivatedRoute,
                 private contactPersonService: ContactPersonService,
@@ -53,9 +55,12 @@ export class EditContactPersonComponent implements OnInit,OnDestroy {
                 } else {
                     this.isNew = true;
                     this.contactPerson = new ContactPerson();
-                    this.sub = this.route.queryParams.subscribe((queryParams: Params) => {
-                        this.parentRouteId = this.contactPerson.AccountId = queryParams['accountId'];
-                    });
+                    if (this.route.snapshot.parent.data.hasOwnProperty('accountInfo')) {
+                        this.parentRouteId = this.contactPerson.AccountId = this.route.snapshot.parent.data['accountInfo'].Id;
+                    }
+                    if (this.route.snapshot.parent.data.hasOwnProperty('contactInfo')) {
+                        this.parentRouteId = this.contactPerson.AccountId = this.route.snapshot.parent.data['contactInfo'].AccountId;
+                    }
                     this.initForm();
                 }
 
@@ -179,6 +184,7 @@ export class EditContactPersonComponent implements OnInit,OnDestroy {
     }
 
     private navigateBack() {
-        this.router.navigate(['../'], {relativeTo: this.route, preserveQueryParams: true});
+        this.contactModal.close();
+        //this.router.navigate(['../'], {relativeTo: this.route, preserveQueryParams: true});
     }
 }

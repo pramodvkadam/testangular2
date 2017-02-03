@@ -1,0 +1,136 @@
+<route-modal modalClass="modal-lg modal-sm " [closeOnEscape]="false"
+             [closeOnOutsideClick]="false" #responseModal>
+    <modal-header>
+        <h2>Add/Edit Attribute</h2>
+    </modal-header>
+    <modal-content>
+        <form class="form-horizontal " *ngIf="active" [formGroup]="responseForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+                <label class="col-md-3">Organization</label>
+                <div class="col-md-9">
+                    <input type="text" class="form-control" name="AccountName" formControlName="AccountName">
+                    <span class="help-block" *ngIf="!responseForm.controls.AccountName.valid && submitted">
+                                                AccountName is required.
+                                            </span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3">Contact</label>
+                <div class="col-md-9">
+                    <!--<input type="text" class="form-control" name="LinkTo" formControlName="LinkTo">-->
+                    <p-dropdown [style]="{'width':'100%','min-width':'350px;'}" [options]="contacts"
+                                formControlName="ContactId" name="ContactId" [filter]="true"
+                                [readonly]="disableContact">
+                    </p-dropdown>
+                    <span class="help-block" *ngIf="!responseForm.controls.ContactId.valid && submitted">
+                                                Contact Name is required.
+                                            </span>
+                </div>
+            </div>
+            <div class="form-group"
+                 [ngClass]="{'has-errors': !responseForm.controls.ActionCodeId.valid && submitted}">
+                <label class="col-md-3">Action Code</label>
+                <div class="col-md-9">
+                    <p-dropdown [style]="{'width':'100%','min-width':'350px;'}" auto [options]="actionCodes"
+                                formControlName="ActionCodeId" name="ActionCodeId"
+                                (onChange)="getCrossCodeAndResponces($event.value)" [filter]="true">
+                    </p-dropdown>
+                    <span class="help-block" *ngIf="!responseForm.controls.ActionCodeId.valid && submitted">
+                                Action Code is required
+                            </span>
+                </div>
+            </div>
+
+            <div class="form-group"
+                 [ngClass]="{'has-errors': !responseForm.controls.ActionResponseId.valid && submitted}">
+                <label class="col-md-3">Response Code</label>
+                <div class="col-md-9">
+                    <p-dropdown [style]="{'width':'100%','min-width':'350px;'}" [options]="responseCodes"
+                                formControlName="ActionResponseId" name="ActionResponseId" [filter]="true">
+                    </p-dropdown>
+                    <span class="help-block" *ngIf="!responseForm.controls.ActionResponseId.valid && submitted">
+                                Action ResponseId Code is required
+                            </span>
+                </div>
+            </div>
+
+            <div class="form-group"
+                 [ngClass]="{'has-errors': !responseForm.controls.ActionCrossCodeId.valid && submitted}">
+                <label class="col-md-3">Cross Code</label>
+                <div class="col-md-9">
+                    <p-dropdown [style]="{'width':'100%','min-width':'350px;'}" [options]="actionCrossCodes"
+                                formControlName="ActionCrossCodeId" name="ActionCrossCodeId" [filter]="true">
+                    </p-dropdown>
+                    <span class="help-block"
+                          *ngIf="!responseForm.controls.ActionCrossCodeId.valid && submitted">
+                                Cross Code is required
+                            </span>
+                </div>
+            </div>
+            <div class="form-group" ngClass="{'has-errors':!responseForm.controls.Name.valid && submitted}">
+                <label class="col-md-3">Description</label>
+                <div class="col-md-9">
+                            <textarea maxlength="100" rows="3" type="text" class="form-control" name="Name"
+                                      formControlName="Name"></textarea>
+                    <span class="help-block" *ngIf="!responseForm.controls.Name.valid && submitted">
+                                                Description is required.
+                                            </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="col-md-4">Created On</label>
+                        <div class="col-md-8">
+                            <p class="form-control-static">{{response.Date | date:'dd-MM-yyyy HH:mm'}}</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4">Modified On</label>
+                        <div class="col-md-8">
+                            <p class="form-control-static">{{response.ModifiedOn | date:'dd-MM-yyyy HH:mm'}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="col-md-4">Created By</label>
+                        <div class="col-md-8">
+                            <p class="form-control-static">{{response.OwnerName}}</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4">Modified By</label>
+                        <div class="col-md-8">
+                            <p class="form-control-static">{{response.ModifiedBy}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 control-label" for=""></label>
+                <div class="col-md-9 text-right">
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-check" aria-hidden="true"></i>
+                        Save
+                    </button>
+                    <button type="button" class="btn btn-danger" (click)="navigateBack()"><i class="fa fa-remove"
+                                                                                             aria-hidden="true"></i>
+                        Cancel
+                    </button>
+                    <a type="button" [routerLink]="[response.ResponseId?'todo':'']"
+                       [preserveQueryParams]="true"
+                       class="btn btn-secondary">
+                        <i class="fa fa-link"></i> Link to-do
+                    </a>
+                </div>
+            </div>
+        </form>
+        <div class="row">
+            <div class="col-md-12">
+                <acsi-todos [taskEntityType]="taskEntityType"
+                            [taskEntityId]="response.ResponseId" *ngIf="response.ResponseId"></acsi-todos>
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+    </modal-content>
+</route-modal>

@@ -12,11 +12,19 @@ export class AccountService {
         this.apiUrl = `${APP_CONFIG.apiUrl}campsite/account/`;
     }
 
-    getAccountByNumber(accountNumber: number) {
+    getAccountByNumber(accountNumber: number|string) {
         return this.http.get(`${this.apiUrl}${accountNumber}`)
             .map((res: Response) => {
                 return res.json()
             })
+    }
+
+    getContactByAccountId(number: string) {
+        return this.http.get(`${this.apiUrl}contactpersonnames/${number}`)
+            .map(response => response.json())
+            .map(data => {
+                return data;
+            });
     }
 
 

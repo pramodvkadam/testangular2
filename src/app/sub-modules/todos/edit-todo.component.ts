@@ -8,6 +8,7 @@ import {Subscription} from "rxjs";
 import {Todo} from "./todo";
 import {AuthService} from "../../shared/auth.service";
 import {TaskEntityType} from "./task-entity-type.enum";
+import {EntityType} from "../../shared/entity-type.enum";
 
 
 @Component({
@@ -48,7 +49,6 @@ export class EditTodoComponent implements OnInit {
                 } else {
                     this.todo.TodoDate = new Date();
                     this.todo.OwnerName = this.authService.getLoggedInUser();
-
                     this.isNew = true;
                     let taskEntityType = this.route.snapshot.parent.data['taskEntityType'];
                     let taskEntityIdVal = (taskEntityType === TaskEntityType.Memo) ?
@@ -56,13 +56,15 @@ export class EditTodoComponent implements OnInit {
                             'attributeId' : 'responseId';
                     this.todo.TaskEntityId = this.route.snapshot.parent.params[taskEntityIdVal];
                     this.todo.TaskEntityType = taskEntityType;
-                    this.todo.EntityId = (this.route.snapshot.queryParams['accountId']) ? this.route.snapshot.queryParams['accountId'] : '';
-                    this.todo.EntityType = (params['accountId']) ? 1 : 0;
+                    this.todo.EntityType = this.route.snapshot.parent.parent.data['entityType'];
+                    console.log(this.route.snapshot.parent.parent.params['accountNumber']);
+                    this.todo.EntityId = this.todo.EntityType === EntityType.Account ?
+                        this.route.snapshot.parent.parent.data['accountInfo'].Id :
+                        this.route.snapshot.parent.parent.data['contactInfo'].Id;
                     this.todo.OwnerId = "";
                     this.todo.Priority = "1";
                     this.todo.StatusCode = "0";
                     this.todo.IsDone = false;
-
                 }
             });
 
@@ -91,9 +93,9 @@ export class EditTodoComponent implements OnInit {
     }
 
     onTodoSubmit() {
-        let todo = Object.assign({}, this.todo);;;;;;;
+        let todo = Object.assign({}, this.todo);
         todo.TodoDate = this.todo.TodoDate.formatted;
-        this.todoService.saveTodo(this.todo)
+        this.todoService.saveTodo(todo)
             .subscribe((response: any) => {
                 if (response) {
                     if (!this.todo.TaskId) {
@@ -103,6 +105,8 @@ export class EditTodoComponent implements OnInit {
                     } else {
                         this.toastr.info("Todo updated successfully!");
                     }
+                    this.todoService.todoUpdateEvent$.emit(true);
+                    this.closeTodo();
                 } else {
                     this.toastr.error(response.ExceptionMessage);
                 }
@@ -112,5 +116,8 @@ export class EditTodoComponent implements OnInit {
             });
     }
 
+    closeTodo() {
+        this.router.navigate(['../'], {relativeTo: this.route, preserveQueryParams: true});
+    }
 
 }

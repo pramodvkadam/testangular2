@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, OnInit, ViewChild} from "@angular/core";
 import {FileUploader} from "ng2-file-upload";
 import {ToastsManager} from "ng2-toastr";
 import {DocumentServiceService} from "../document-service.service";
@@ -29,6 +29,7 @@ export class UploadDocumentComponent implements OnInit {
     private parentRouteId: string;
     private sub: Subscription;
     private entityType: number;
+    @ViewChild('documentModal') documentModal: any;
 
     constructor(private documentService: DocumentServiceService,
                 private acsiService: AcsiService,
@@ -38,10 +39,13 @@ export class UploadDocumentComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.sub = this.route.queryParams.subscribe((queryParams: Params) => {
-            this.parentRouteId = queryParams['accountId'];
-            this.entityType = queryParams['accountId'] ? 0 : 1;
-        });
+        this.entityType = this.route.snapshot.parent.data['entityType'];
+        if (this.route.snapshot.parent.data.hasOwnProperty('accountInfo')) {
+            this.parentRouteId = this.route.snapshot.parent.data['accountInfo'].Id;
+        }
+        if (this.route.snapshot.parent.data.hasOwnProperty('contactInfo')) {
+            this.parentRouteId = this.route.snapshot.parent.data['contactInfo'].AccountId;
+        }
         this.acsiService.getLabels().subscribe((labels: any) => {
             this.labels = labels;
         });
@@ -80,6 +84,8 @@ export class UploadDocumentComponent implements OnInit {
                             .subscribe(response => {
                                 if (response) {
                                     this.toastr.info("Document uploaded!");
+                                    this.documentService.documentUpdateEvent$.emit(true);
+                                    this.navigateBack();
                                 }
                             }, error => {
                                 let errors = error.json();
@@ -103,6 +109,7 @@ export class UploadDocumentComponent implements OnInit {
     }
 
     private navigateBack() {
-        this.router.navigate(['../'], {relativeTo: this.route, preserveQueryParams: true});
+        this.documentModal.close();
+        //this.router.navigate(['../'], {relativeTo: this.route, preserveQueryParams: true});
     }
 }

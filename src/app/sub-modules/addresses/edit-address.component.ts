@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, OnInit, ViewChild} from "@angular/core";
 import {FormGroup, FormBuilder, Validators, FormControl} from "@angular/forms";
 import {Address} from "./address";
 import {Subscription} from "rxjs";
@@ -6,6 +6,7 @@ import {ActivatedRoute, Router, Params} from "@angular/router";
 import {AddressService} from "./address.service";
 import {ToastsManager} from "ng2-toastr";
 import {AcsiService} from "../../shared/acsi.service";
+import {EntityType} from "../../shared/entity-type.enum";
 
 @Component({
     selector: 'acsi-edit-address',
@@ -25,6 +26,7 @@ export class EditAddressComponent implements OnInit {
     private countries: Array<any>;
     private isForContactPerson: boolean = false;
     private sub: Subscription;
+    @ViewChild('addressModal') addressModal: any;
 
     constructor(private route: ActivatedRoute,
                 private addressService: AddressService,
@@ -57,11 +59,10 @@ export class EditAddressComponent implements OnInit {
                     this.isNew = true;
                     this.address = new Address();
                     this.address.AddressType = 0;
-                    this.sub = this.route.queryParams.subscribe((queryParams: Params) => {
-                        this.address.EntityType = queryParams['accountId'] ? 0 : 1;
-                        this.address.ParentId = queryParams['accountId'];
-
-                    });
+                    this.address.EntityType = this.route.snapshot.parent.data['entityType'];
+                    this.address.ParentId = this.address.EntityType === EntityType.Account ?
+                        this.route.snapshot.parent.data['accountInfo'].Id :
+                        this.route.snapshot.parent.data['contactInfo'].Id;
                     this.isForContactPerson = (this.address.EntityType === 1);
                     this.initForm();
                 }
@@ -71,7 +72,7 @@ export class EditAddressComponent implements OnInit {
 
                 }, error => {
                     let errors = error.json();
-                    alert(errors.ExceptionMessage);
+                    this.toastr.error(errors.ExceptionMessage);
                 })
             }
         );
@@ -176,7 +177,8 @@ export class EditAddressComponent implements OnInit {
     }
 
     private navigateBack() {
-        this.router.navigate(['../'], {relativeTo: this.route, preserveQueryParams: true});
+        // this.router.navigate(['../'], {relativeTo: this.route, preserveQueryParams: true});
+        this.addressModal.close();
     }
 
 }

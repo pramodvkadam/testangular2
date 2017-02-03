@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, OnInit, ViewChild} from "@angular/core";
 import {ActivatedRoute, Router, Params} from "@angular/router";
 import {FormBuilder, Validators, FormGroup} from "@angular/forms";
 import {Subscription} from "rxjs";
@@ -29,6 +29,7 @@ export class EditMemoComponent implements OnInit {
     taskEntityType: number = TaskEntityType.Memo;
     noteEntityType: number = 1;
     private qSub: Subscription;
+    @ViewChild('memoModal') memoModal: any;
 
     constructor(private authService: AuthService,
                 private memoService: MemoService,
@@ -54,15 +55,17 @@ export class EditMemoComponent implements OnInit {
                     this.memo.ModifiedOn = new Date();
                     this.memo.ModifiedBy = this.authService.getLoggedInUser();
                     this.memo.OwnerName = this.authService.getLoggedInUser();
-
                     this.isNew = true;
-                    this.qSub = this.route
-                        .queryParams
-                        .subscribe((params: Params) => {
-                            this.memo.ContactId = (params['contactId']) ? params['contactId'] : '';
-                            this.memo.AccountId = (params['accountId']) ? params['accountId'] : '';
-                            this.memo.AccountName = (params['accountName']) ? params['accountName'] : '';
-                        });;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                    if (this.route.snapshot.parent.data.hasOwnProperty('accountInfo')) {
+                        this.memo.AccountName = this.route.snapshot.parent.data['accountInfo'].Name;
+                        this.memo.AccountId = this.route.snapshot.parent.data['accountInfo'].Id;
+                    }
+                    if (this.route.snapshot.parent.data.hasOwnProperty('contactInfo')) {
+                        this.memo.AccountName = this.route.snapshot.parent.data['contactInfo'].Name;
+                        this.memo.ContactId = this.route.snapshot.parent.data['contactInfo'].Id;
+                        this.memo.AccountId = this.route.snapshot.parent.data['contactInfo'].AccountId;
+                    }
+
                     this.initForm();
                 }
             })
@@ -104,8 +107,7 @@ export class EditMemoComponent implements OnInit {
                 ModifiedBy: [ModifiedBy],
                 AccountId: [AccountId],
                 ContactId: [ContactId]
-            });;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
+            });
         this.active = true;
     }
 
@@ -133,6 +135,6 @@ export class EditMemoComponent implements OnInit {
     }
 
     private navigateBack() {
-        this.router.navigate(['../'], {relativeTo: this.route, preserveQueryParams: true});
+        this.memoModal.close();
     }
 }

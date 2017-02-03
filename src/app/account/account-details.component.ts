@@ -44,8 +44,7 @@ export class AccountDetailsComponent implements OnInit {
     loadTabz(tabName: string) {
         this.selectedTab = tabName.toLowerCase();
         this.router.navigate([`${this.selectedTab}`], {
-            relativeTo: this.route,
-            queryParams: {accountId: this.accountInfo.Id}
+            relativeTo: this.route
         });
     }
 

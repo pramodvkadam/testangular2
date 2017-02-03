@@ -2,12 +2,13 @@ import {Injectable} from "@angular/core";
 import {Http, XHRBackend, RequestOptions, Request, RequestOptionsArgs, Response, Headers} from "@angular/http";
 import {Observable} from "rxjs/Observable";
 import {Router} from "@angular/router";
+import {AuthService} from "./auth.service";
 
 
 @Injectable()
 export class HttpService extends Http {
     private router: Router;
-
+    private authService: AuthService;
     constructor(backend: XHRBackend, options: RequestOptions) {
         let token = localStorage.getItem('insp_token'); // your custom token getter function here
         options.headers.set('Authorization', `Bearer ${token}`);
@@ -33,10 +34,11 @@ export class HttpService extends Http {
         // we have to pass HttpService's own instance here as `self`
         return (res: Response) => {
             if (res.status === 401 || res.status === 403) {
-                // if not authenticated
-                this.router.navigateByUrl("");
+                // if not authenticated this.router.navigate(['']);
+                this.authService.logOut();
             }
             return Observable.throw(res);
+
         };
     }
 }

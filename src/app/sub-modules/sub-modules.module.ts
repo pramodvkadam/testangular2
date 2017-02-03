@@ -9,7 +9,6 @@ import {DocumentsComponent} from "./documents/documents.component";
 import {MemosComponent} from "./memos/memos.component";
 import {AttributesComponent} from "./attributes/attributes.component";
 import {ResponsesComponent} from "./responses/responses.component";
-import {TasksComponent} from "./tasks/tasks.component";
 import {TodosComponent} from "./todos/todos.component";
 import {NotesComponent} from "./memos/notes.component";
 import {EmailService} from "./emails/email.service";
@@ -22,6 +21,12 @@ import {MemoService} from "./memos/memo.service";
 import {EditMemoComponent} from "./memos/edit-memo/edit-memo.component";
 import {TodoService} from "./todos/todo.service";
 import {EditTodoComponent} from "./todos/edit-todo.component";
+import {AttributeService} from "./attributes/attribute.service";
+import {EditAttributeComponent} from './attributes/edit-attribute/edit-attribute.component';
+import {EditResponseComponent} from './responses/edit-response/edit-response.component';
+import {ResponseService} from "./responses/response.service";
+import {TodoListComponent} from './todos/todo-list.component';
+
 
 @NgModule({
     imports: [
@@ -35,7 +40,6 @@ import {EditTodoComponent} from "./todos/edit-todo.component";
         MemosComponent,
         AttributesComponent,
         ResponsesComponent,
-        TasksComponent,
         TodosComponent,
         NotesComponent,
         EditAddressComponent,
@@ -43,12 +47,18 @@ import {EditTodoComponent} from "./todos/edit-todo.component";
         UploadDocumentComponent,
         EditMemoComponent,
         NotesComponent,
-        EditTodoComponent
+        EditTodoComponent,
+        EditAttributeComponent,
+        EditResponseComponent,
+        TodoListComponent
     ],
     providers: [EmailService,
         AddressService,
         ContactPersonService,
-        MemoService, TodoService]
+        MemoService,
+        AttributeService,
+        ResponseService,
+        TodoService]
 })
 export class SubModulesModule {
 }

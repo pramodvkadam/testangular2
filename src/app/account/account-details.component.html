@@ -85,8 +85,7 @@
     <ul class="nav nav-tabs">
         <li role="presentation" [class.active]="tabz.Name === selectedTab"
             *ngFor="let tabz of accountInfo.TabCounts"
-        ><a (click)="loadTabz(tabz.Name)" routerLinkActive="active" [routerLinkActiveOptions]="{exact:
-true}"> <span>{{tabz.Name}} ({{tabz.Count}})</span></a>
+        ><a (click)="loadTabz(tabz.Name)" routerLinkActive="active"> <span>{{tabz.Name}} ({{tabz.Count}})</span></a>
         </li>
     </ul>
     <div class="tab-content">

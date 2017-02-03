@@ -11,6 +11,7 @@ import {DocumentListComponent} from "./document-list/document-list.component";
 import {DownloadComponent} from "./download/download.component";
 import {FileUploadModule} from "ng2-file-upload";
 import {ModalModule} from "ngx-modal";
+import {DropdownModule} from "primeng/components/dropdown/dropdown";
 
 @NgModule({
     exports: [
@@ -25,7 +26,8 @@ import {ModalModule} from "ngx-modal";
         DocumentListComponent,
         DownloadComponent,
         FileUploadModule,
-        MyDatePickerModule
+        MyDatePickerModule,
+        DropdownModule
     ],
     imports: [DataTableModule, CommonModule],
     declarations: [SafeHtmlPipe, Nl2brPipe, DocumentListComponent, DownloadComponent]

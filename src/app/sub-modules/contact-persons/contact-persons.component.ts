@@ -4,6 +4,7 @@ import {Router, ActivatedRoute, Params} from "@angular/router";
 import {ToastsManager} from "ng2-toastr";
 import {ContactPerson} from "./contact-person";
 import {Subscription} from "rxjs";
+import {EntityType} from "../../shared/entity-type.enum";
 
 @Component({
     selector: 'acsi-contact-persons',
@@ -33,8 +34,9 @@ export class ContactPersonsComponent implements OnInit {
     ngOnInit() {
         this.subscription = this.route.params.subscribe(
             (params: Params) => {
-                this.entityNumber = params['accountNumber'];
-                this.entityType = Number(!this.entityNumber);
+                this.entityType = this.route.snapshot.parent.data['entityType'];
+                this.entityNumber = this.entityType === EntityType.Account ?
+                    params['accountNumber'] : params['contactNumber'];
                 this.fields = this.contactPersonService.getContactPersonsFields();
                 this.getData();
             });

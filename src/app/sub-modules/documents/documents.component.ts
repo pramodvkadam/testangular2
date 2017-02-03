@@ -4,6 +4,7 @@ import {Subscription} from "rxjs";
 import {DocumentServiceService} from "./document-service.service";
 import {Router, ActivatedRoute, Params} from "@angular/router";
 import {ToastsManager} from "ng2-toastr";
+import {EntityType} from "../../shared/entity-type.enum";
 
 @Component({
     selector: 'acsi-documents',
@@ -31,8 +32,9 @@ export class DocumentsComponent implements OnInit {
     ngOnInit() {
         this.subscription = this.route.params.subscribe(
             (params: Params) => {
-                this.entityNumber = params['accountNumber'];
-                this.entityType = Number(!this.entityNumber);
+                this.entityType = this.route.snapshot.parent.data['entityType'];
+                this.entityNumber = this.entityType === EntityType.Account ?
+                    params['accountNumber'] : params['contactNumber'];
                 this.getData();
             });
     }

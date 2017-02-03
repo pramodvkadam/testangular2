@@ -1,0 +1,95 @@
+<route-modal modalClass="modal-lg modal-sm " [closeOnEscape]="false"
+             [closeOnOutsideClick]="false" #attributeModal>
+    <modal-header>
+        <h2>Add/Edit Attribute</h2>
+    </modal-header>
+    <modal-content>
+        <form class="form-horizontal " *ngIf="active" [formGroup]="attributeForm" (ngSubmit)="onSubmit()">
+
+            <div class="form-group">
+                <label class="col-md-3">Organization</label>
+                <div class="col-md-9">
+                    <input type="text" class="form-control" name="AccountName" formControlName="AccountName">
+                    <span class="help-block" *ngIf="!attributeForm.controls.AccountName.valid && submitted">
+                                                AccountName is required.
+                                            </span>
+                </div>
+            </div>
+            <div class="form-group"
+                 [ngClass]="{'has-errors': !attributeForm.controls.AttributeCodeId.valid && submitted}">
+                <label class="col-md-3">Attribute Code</label>
+                <div class="col-md-9">
+                    <p-dropdown [style]="{'width':'350px'}" [options]="attributeCodes"
+                                id="AttributeCodeId" formControlName="AttributeCodeId" name="AttributeCodeId"
+                                [filter]="true" required>
+                    </p-dropdown>
+                    <span class="help-block" *ngIf="!attributeForm.controls.AttributeCodeId.valid && submitted">
+                                Attribute Code is required
+                            </span>
+                </div>
+            </div>
+            <div class="form-group"
+                 ngClass="{'has-errors':!attributeForm.controls.Description.valid && submitted}">
+                <label class="col-md-3">Description</label>
+                <div class="col-md-9">
+                            <textarea maxlength="100" rows="1" type="text" class="form-control" name="Description"
+                                      formControlName="Description"></textarea>
+                    <span class="help-block" *ngIf="!attributeForm.controls.Description.valid && submitted">
+                                                Description is required.
+                                            </span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-4">Created On</label>
+                <div class="col-md-8">
+                    <p class="form-control-static">{{attribute.CreatedOn | date:'dd-MM-yyyy HH:mm'}}</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-4">Modified On</label>
+                <div class="col-md-8">
+                    <p class="form-control-static">{{attribute.ModifiedOn | date:'dd-MM-yyyy HH:mm'}}</p>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-4">Created By</label>
+                <div class="col-md-8">
+                    <p class="form-control-static">{{attribute.OwnerName}}</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-4">Modified By</label>
+                <div class="col-md-8">
+                    <p class="form-control-static">{{attribute.ModifiedBy}}</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 control-label" for=""></label>
+                <div class="col-md-9 text-right">
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-check" aria-hidden="true"></i>
+                        Save
+                    </button>
+                    <button type="button" class="btn btn-danger" (click)="navigateBack()"><i class="fa fa-remove"
+                                                                                             aria-hidden="true"></i>
+                        Cancel
+                    </button>
+                    <a type="button" [routerLink]="[attribute.AttributeId?'todo':'']"
+                       [preserveQueryParams]="true"
+                       class="btn btn-secondary"
+                    >
+                        <i class="fa fa-link"></i> Link to-do
+                    </a>
+                </div>
+            </div>
+        </form>
+        <div class="row">
+            <div class="col-md-12">
+                <acsi-todos [taskEntityType]="taskEntityType"
+                            [taskEntityId]="attribute.AttributeId" *ngIf="attribute.AttributeId"></acsi-todos>
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+    </modal-content>
+</route-modal>
