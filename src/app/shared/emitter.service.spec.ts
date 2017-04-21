@@ -1,15 +1,15 @@
 /* tslint:disable:no-unused-variable */
 import {TestBed, inject} from "@angular/core/testing";
-import {EmmiterService} from "./emitter.service";
+import {EmitterService} from "./emitter.service";
 
 describe('EmmiterService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
-            providers: [EmmiterService]
+            providers: [EmitterService]
         });
     });
 
-    it('should ...', inject([EmmiterService], (service: EmmiterService) => {
+    it('should ...', inject([EmitterService], (service: EmitterService) => {
         expect(service).toBeTruthy();
     }));
 });

@@ -45,7 +45,7 @@ export function provideHttp(backend: XHRBackend, options: RequestOptions) {
         HttpModule,
         routing,
         Ng2BootstrapModule.forRoot(),
-        ToastModule,
+        ToastModule.forRoot(),
         InfiniteScrollModule,
         FileUploadModule
     ],
